@@ -1,8 +1,9 @@
 trigger:
 - main
 
+# ISSO AQUI É O SEGREDO:
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Default' 
 
 steps:
 - task: Docker@2
