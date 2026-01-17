@@ -1,6 +1,6 @@
 variables:
   # O nome da conexão que você criou nas 'Service Connections' do Azure DevOps
-  azureServiceConnection: 'AzureCloudConnection' 
+  azureServiceConnection: 'gabri3lmarques' 
   
   # O Login Server do seu registro
   containerRegistry: 'stockmasterreg.azurecr.io'
