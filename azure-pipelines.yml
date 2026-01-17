@@ -1,44 +1,25 @@
 trigger:
 - main
 
+# ISSO AQUI É O SEGREDO:
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Default' 
 
-variables:
-  # CONFIRME SE ESTE É O NOME DA SUA CONEXÃO
-  azureServiceConnection: 'gabri3lmarques' 
-  
-  # SEU LOGIN SERVER DO PORTAL AZURE
-  containerRegistry: 'stockmasterreg.azurecr.io'
-  
-  backendImage: 'stockmaster-api'
-  frontendImage: 'stockmaster-web'
+steps:
+- task: Docker@2
+  displayName: 'Construindo Backend'
+  inputs:
+    containerRegistry: 'AcessoAoRegistro'
+    repository: 'stockmaster-api'
+    command: 'buildAndPush'
+    Dockerfile: 'backend/StockMaster.Api/Dockerfile'
+    tags: 'latest'
 
-stages:
-- stage: BuildAndPush
-  displayName: 'Build and Push Stage'
-  jobs:
-  - job: DockerBuild
-    displayName: 'Docker Build and Push Job'
-    steps:
-    - task: Docker@2
-      displayName: 'Build and Push Backend'
-      inputs:
-        containerRegistry: $(azureServiceConnection)
-        repository: $(backendImage)
-        command: 'buildAndPush'
-        Dockerfile: 'backend/StockMaster.Api/Dockerfile'
-        tags: |
-          $(Build.BuildId)
-          latest
-
-    - task: Docker@2
-      displayName: 'Build and Push Frontend'
-      inputs:
-        containerRegistry: $(azureServiceConnection)
-        repository: $(frontendImage)
-        command: 'buildAndPush'
-        Dockerfile: 'frontend/Dockerfile'
-        tags: |
-          $(Build.BuildId)
-          latest
+- task: Docker@2
+  displayName: 'Construindo Frontend'
+  inputs:
+    containerRegistry: 'AcessoAoRegistro'
+    repository: 'stockmaster-web'
+    command: 'buildAndPush'
+    Dockerfile: 'frontend/Dockerfile'
+    tags: 'latest'
