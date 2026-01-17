@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api' // CONFIRME A PORTA DA SUA API AQUI
+  baseURL: 'https://stockmaster-web-api-cph9fpcsbnfhe3gs.canadacentral-01.azurewebsites.net/api' // CONFIRME A PORTA DA SUA API AQUI
 });
 
 // Interceptor to add the JWT token to every request
