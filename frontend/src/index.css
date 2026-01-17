@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Se você quiser manter aquela cor 'azure' personalizada: */
+@theme {
+  --color-azure: #0078d4;
+}
+
+/* O resto do seu CSS base */
+body {
+  background-color: #f9fafb; /* gray-50 */
+  color: #111827; /* gray-900 */
+}

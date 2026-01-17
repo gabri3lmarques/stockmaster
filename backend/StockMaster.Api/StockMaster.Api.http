@@ -1,0 +1,6 @@
+@StockMaster.Api_HostAddress = http://localhost:5285
+
+GET {{StockMaster.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

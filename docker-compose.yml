@@ -1,0 +1,50 @@
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: stockmaster-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Gab@2026
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+    networks:
+      - stockmaster-network
+
+  backend:
+    build: 
+      context: ./backend/StockMaster.Api
+      dockerfile: Dockerfile
+    container_name: stockmaster-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=database;Database=StockMasterDB;User Id=sa;Password=Gab@2026;TrustServerCertificate=True;
+      - Jwt__Key=Your_Super_Secret_StockMaster_Key_2026_!@#
+      - Jwt__Issuer=StockMaster.Api
+      - Jwt__Audience=StockMaster.Web
+    depends_on:
+      - database
+    networks:
+      - stockmaster-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: stockmaster-web
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - stockmaster-network
+
+networks:
+  stockmaster-network:
+    driver: bridge
+
+volumes:
+  sql-data:
